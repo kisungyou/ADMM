@@ -81,3 +81,6 @@ plot(1:niter, output$history$r_norm, "b", main="primal residual")
 plot(1:niter, output$history$s_norm, "b", main="dual residual")
 
 }
+\references{
+\insertRef{tibshirani_regression_1996}{ADMM}
+}
