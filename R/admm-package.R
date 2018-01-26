@@ -6,7 +6,6 @@
 #' For interested users/readers, please visit Prof. Stephen Boyd's \href{http://stanford.edu/~boyd/papers/admm_distr_stats.html}{website}
 #' entirely devoted to the topic.
 #'
-#'
 #' @docType package
 #' @name ADMM
 #' @aliases ADMM-package
