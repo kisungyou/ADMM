@@ -3,6 +3,7 @@
 export(admm.bp)
 export(admm.lad)
 export(admm.lasso)
+export(admm.spca)
 export(admm.tv)
 import(Matrix)
 import(Rdpack)
