@@ -7,6 +7,65 @@
 admm.spca(Sigma, numpc, mu = 1, rho = 1, abstol = 1e-04, reltol = 0.01,
   maxiter = 1000)
 }
+\arguments{
+\item{Sigma}{a \eqn{(p\times p)} (sample) covariance matrix.}
+
+\item{numpc}{number of principal components to be extracted.}
+
+\item{mu}{an augmented Lagrangian parameter.}
+
+\item{rho}{a regularization parameter for sparsity.}
+
+\item{abstol}{absolute tolerance stopping criterion.}
+
+\item{reltol}{relative tolerance stopping criterion.}
+
+\item{maxiter}{maximum number of iterations.}
+}
+\value{
+a named list containing \describe{
+\item{basis}{a \eqn{(p\times numpc)} matrix whose columns are sparse principal components.}
+\item{history}{a length-\code{numpc} list of dataframes recording iteration numerics. See the section for more details.}
+}
+}
 \description{
-Sparse PCA
+Sparse Principal Component Analysis aims at finding a sparse vector by solving
+\deqn{max_x~x^T\Sigma x \quad \textrm{s.t.} \quad \|x\|_2\le 1,~\|x\|_0\le K}
+where \eqn{\|x\|_0} is the number of non-zero elements in a vector \eqn{x}. A convex relaxation
+of this problem was proposed to solve the following problem,
+\deqn{max_X~<\Sigma,X> ~\textrm{s.t.} \quad Tr(X)=1,~\|X\|_0 \le K^2, ~X\ge 0,~\textrm{rank}(X)=1}
+where \eqn{X=xx^T} is a \eqn{(p\times p)} matrix that is outer product of a vector \eqn{x} by itself,
+and \eqn{X\ge 0} means the matrix \eqn{X} is positive semidefinite.
+With the rank condition dropped, it can be restated as
+\deqn{max_X~ <\Sigma,X>-\rho\|X\|_1 \quad \textrm{s.t.}\quad Tr(X)=1,X\ge 0.}
+After acquiring each principal component vector, an iterative step based on Schur complement deflation method
+is applied to regress out the impact of previously-computed projection vectors. It should be noted that
+those sparse basis may \emph{not be orthonormal}.
+}
+\section{Iteration History}{
+
+For SPCA implementation, main computation is sequentially performed for each projection vector. The \code{history}
+field is a list of length \code{numpc}, where each element is a data frame containing iteration history recording
+following fields over iterates,
+\describe{
+\item{r_norm}{norm of primal residual}
+\item{s_norm}{norm of dual residual}
+\item{eps_pri}{feasibility tolerance for primal feasibility condition}
+\item{eps_dual}{feasibility tolerance for dual feasibility condition}
+}
+In accordance with the paper, iteration stops when both \code{r_norm} and \code{s_norm} values
+become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
+}
+
+\examples{
+## generate a random matrix and compute its sample covariance
+X    = matrix(rnorm(1000*5),nrow=1000)
+covX = cov(X)
+
+## compute 3 sparse basis
+output = admm.spca(covX, 3)
+
+}
+\references{
+\insertRef{ma_alternating_2013}{ADMM}
 }
