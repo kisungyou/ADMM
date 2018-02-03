@@ -90,14 +90,14 @@ admm.tv <- function(b, lambda=1.0, xinit=NA,
   result = admm_tv(b, xinit, lambda, reltol, abstol, maxiter, rho, alpha)
 
   ## RESULT RETURN
-  kk = result$k
+  klength = result$k
   output = list()
   output$x = result$x
-  output$history = data.frame(objval=result$objval[1:kk],
-                              r_norm=result$r_norm[1:kk],
-                              s_norm=result$s_norm[1:kk],
-                              eps_pri=result$eps_pri[1:kk],
-                              eps_dual=result$eps_dual[1:kk]
+  output$history = data.frame(objval=result$objval[1:klength],
+                              r_norm=result$r_norm[1:klength],
+                              s_norm=result$s_norm[1:klength],
+                              eps_pri=result$eps_pri[1:klength],
+                              eps_dual=result$eps_dual[1:klength]
   )
   return(output)
 }
