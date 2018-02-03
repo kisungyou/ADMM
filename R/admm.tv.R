@@ -35,7 +35,6 @@
 #' become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 #'
 #' @examples
-#' \dontrun{
 #' ## generate sample data
 #' x1 = as.vector(sin(1:100)+0.1*rnorm(100))
 #' x2 = as.vector(cos(1:100)+0.1*rnorm(100)+5)
@@ -49,7 +48,6 @@
 #' par(mfrow=c(1,2))
 #' plot(1:300,xsignal,"l",main="original signal")
 #' plot(1:300,output$x,"l",main="denoised signal")
-#' }
 #'
 #' @rdname TV
 #' @export
