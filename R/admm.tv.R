@@ -7,14 +7,14 @@
 #' The implementation is borrowed from Stephen Boyd's
 #' \href{http://stanford.edu/~boyd/papers/admm/total_variation/total_variation.html}{MATLAB code}.
 #'
-#' @param b a length-\eqn{m} response vector.
-#' @param lambda regularization parameter.
-#' @param xinit a length\eqn{m} vector for initial value.
-#' @param rho an augmented Lagrangian parameter.
-#' @param alpha an overrelaxation parameter in \eqn{[1,2]}.
-#' @param abstol absolute tolerance stopping criterion.
-#' @param reltol relative tolerance stopping criterion.
-#' @param maxiter maximum number of iterations.
+#' @param b a length-\eqn{m} response vector
+#' @param lambda regularization parameter
+#' @param xinit a length\eqn{m} vector for initial value
+#' @param rho an augmented Lagrangian parameter
+#' @param alpha an overrelaxation parameter in \eqn{[1,2]}
+#' @param abstol absolute tolerance stopping criterion
+#' @param reltol relative tolerance stopping criterion
+#' @param maxiter maximum number of iterations
 #'
 #' @return a named list containing \describe{
 #' \item{x}{a length-\eqn{m} solution vector}
