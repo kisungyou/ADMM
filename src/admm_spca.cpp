@@ -134,7 +134,6 @@ Rcpp::List admm_spca(const arma::mat& Sigma, const double reltol, const double a
     }
   }
 
-
   // 5. report results
   List output;
   output["X"] = Xold;             // coefficient function

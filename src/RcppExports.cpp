@@ -61,6 +61,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// admm_rpca
+Rcpp::List admm_rpca(const arma::mat& M, const double tol, const int maxiter, double mu, double lambda);
+RcppExport SEXP _ADMM_admm_rpca(SEXP MSEXP, SEXP tolSEXP, SEXP maxiterSEXP, SEXP muSEXP, SEXP lambdaSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type M(MSEXP);
+    Rcpp::traits::input_parameter< const double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< double >::type mu(muSEXP);
+    Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
+    rcpp_result_gen = Rcpp::wrap(admm_rpca(M, tol, maxiter, mu, lambda));
+    return rcpp_result_gen;
+END_RCPP
+}
 // admm_spca
 Rcpp::List admm_spca(const arma::mat& Sigma, const double reltol, const double abstol, const int maxiter, double mu, double rho);
 RcppExport SEXP _ADMM_admm_spca(SEXP SigmaSEXP, SEXP reltolSEXP, SEXP abstolSEXP, SEXP maxiterSEXP, SEXP muSEXP, SEXP rhoSEXP) {
@@ -100,6 +115,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ADMM_admm_bp", (DL_FUNC) &_ADMM_admm_bp, 8},
     {"_ADMM_admm_lad", (DL_FUNC) &_ADMM_admm_lad, 8},
     {"_ADMM_admm_lasso", (DL_FUNC) &_ADMM_admm_lasso, 9},
+    {"_ADMM_admm_rpca", (DL_FUNC) &_ADMM_admm_rpca, 5},
     {"_ADMM_admm_spca", (DL_FUNC) &_ADMM_admm_spca, 6},
     {"_ADMM_admm_tv", (DL_FUNC) &_ADMM_admm_tv, 8},
     {NULL, NULL, 0}

@@ -21,6 +21,12 @@ admm_lasso <- function(A, b, lambda, xinit, reltol, abstol, maxiter, rho, alpha)
 
 #' @keywords internal
 #' @noRd
+admm_rpca <- function(M, tol, maxiter, mu, lambda) {
+    .Call('_ADMM_admm_rpca', PACKAGE = 'ADMM', M, tol, maxiter, mu, lambda)
+}
+
+#' @keywords internal
+#' @noRd
 admm_spca <- function(Sigma, reltol, abstol, maxiter, mu, rho) {
     .Call('_ADMM_admm_spca', PACKAGE = 'ADMM', Sigma, reltol, abstol, maxiter, mu, rho)
 }
