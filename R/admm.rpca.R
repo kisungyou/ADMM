@@ -1,7 +1,7 @@
 #' Robust Principal Component Analysis
 #'
 #' Given a data matrix \eqn{M}, it finds a decomposition
-#' \deqn{min~\|L\|_*+\lambda \|S\|_1\quad \textrm{s.t.}\quad L+S=M}
+#' \deqn{\textrm{min}~\|L\|_*+\lambda \|S\|_1\quad \textrm{s.t.}\quad L+S=M}
 #' where \eqn{\|L\|_*} represents a nuclear norm for a matrix \eqn{L} and
 #' \eqn{\|S\|_1 = \sum |S_{i,j}|}, and \eqn{\lambda} a balancing/regularization
 #' parameter. The choice of such norms leads to impose \emph{low-rank} property for \eqn{L} and
@@ -9,7 +9,7 @@
 #'
 #'
 #' @param M an \eqn{(m\times n)} data matrix
-#' @param lambda a regularization parameber
+#' @param lambda a regularization parameter
 #' @param mu an augmented Lagrangian parameter
 #' @param tol relative tolerance stopping criterion
 #' @param maxiter maximum number of iterations

@@ -1,17 +1,16 @@
-#' Least Absolute Shrinkage and Selection Operator
+#' Elastic Net Regularization
 #'
-#' LASSO, or L1-regularized regression, is an optimization problem to solve
-#' \deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|x\|_1}
-#' for sparsifying the coefficient vector \eqn{x}.
-#' The implementation is borrowed from Stephen Boyd's
-#' \href{http://stanford.edu/~boyd/papers/admm/lasso/lasso.html}{MATLAB code}.
+#' Elastic Net regularization is a combination of \eqn{\ell_2} stability and
+#' \eqn{\ell_1} sparsity constraint simulatenously solving the following,
+#' \deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda_1 \|x\|_1 + \lambda_2 \|x\|_2^2}
+#' with nonnegative constraints \eqn{\lambda_1} and \eqn{\lambda_2}. Note that if both lambda values are 0,
+#' it reduces to least-squares solution.
 #'
 #' @param A an \eqn{(m\times n)} regressor matrix
 #' @param b a length-\eqn{m} response vector
-#' @param lambda a regularization parameter
-#' @param xinit a length-\eqn{n} vector for initial value
+#' @param lambda1 a regularization parameter for \eqn{\ell_1} term
+#' @param lambda2 a regularization parameter for \eqn{\ell_2} term
 #' @param rho an augmented Lagrangian parameter
-#' @param alpha an overrelaxation parameter in [1,2]
 #' @param abstol absolute tolerance stopping criterion
 #' @param reltol relative tolerance stopping criterion
 #' @param maxiter maximum number of iterations
@@ -35,9 +34,9 @@
 #' become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 #'
 #' @examples
-#' ## generate sample data
-#' m = 500
-#' n = 1000
+#' ## generate underdetermined design matrix
+#' m = 50
+#' n = 100
 #' p = 0.1   # percentange of non-zero elements
 #'
 #' x0 = matrix(Matrix::rsparsematrix(n,1,p))
@@ -47,11 +46,8 @@
 #' }
 #' b = A%*%x0 + sqrt(0.001)*matrix(rnorm(m))
 #'
-#' ## set regularization lambda value
-#' lambda = 0.1*Matrix::norm(t(A)%*%b, 'I')
-#'
-#' ## run example
-#' output = admm.lasso(A, b, lambda)
+#' ## run example with both regularization values = 1
+#' output = admm.enet(A, b, lambda1=1, lambda2=1)
 #'
 #' ## report convergence plot
 #' niter  = length(output$history$s_norm)
@@ -61,56 +57,59 @@
 #' plot(1:niter, output$history$s_norm, "b", main="dual residual")
 #'
 #' @references
-#' \insertRef{tibshirani_regression_1996}{ADMM}
+#' \insertRef{zou_regularization_2005}{ADMM}
 #'
-#' @rdname LASSO
+#' @seealso \code{\link{admm.lasso}}
+#' @author Xiaozhi Zhu
+#' @rdname ENET
 #' @export
-admm.lasso <- function(A, b, lambda=1.0, xinit=NA,
-                    rho=1.0, alpha=1.0,
-                    abstol=1e-4, reltol=1e-2, maxiter=1000){
+admm.enet <- function(A, b,
+                      lambda1=1.0, lambda2=1.0, rho=1.0,
+                      abstol=1e-4, reltol=1e-2, maxiter=1000){
+  #-----------------------------------------------------------
   ## PREPROCESSING
   # data validity
   if (!check_data_matrix(A)){
-    stop("* ADMM.LASSO : input 'A' is invalid data matrix.")  }
+    stop("* ADMM.ENET : input 'A' is invalid data matrix.")  }
   if (!check_data_vector(b)){
-    stop("* ADMM.LASSO : input 'b' is invalid data vector")  }
+    stop("* ADMM.ENET : input 'b' is invalid data vector")  }
   b = as.vector(b)
   # data size
   if (nrow(A)!=length(b)){
-    stop("* ADMM.LASSO : two inputs 'A' and 'b' have non-matching dimension.")}
-  # initial value
-  if (!is.na(xinit)){
-    if ((!check_data_vector(xinit))||(length(xinit)!=ncol(A))){
-      stop("* ADMM.LASSO : input 'xinit' is invalid.")
-    }
-    xinit = as.vector(xinit)
-  } else {
-    xinit = as.vector(rep(0,ncol(A)))
-  }
+    stop("* ADMM.ENET : two inputs 'A' and 'b' have non-matching dimension.")}
   # other parameters
-  if (!check_param_constant(lambda)){
-    stop("* ADMM.LASSO : reg. parameter 'lambda' is invalid.")
-  }
   if (!check_param_constant_multiple(c(abstol, reltol))){
-    stop("* ADMM.LASSO : tolerance level is invalid.")
+    stop("* ADMM.ENET : tolerance level is invalid.")
   }
   if (!check_param_integer(maxiter, 2)){
-    stop("* ADMM.LASSO : 'maxiter' should be a positive integer.")
+    stop("* ADMM.ENET : 'maxiter' should be a positive integer.")
   }
   maxiter = as.integer(maxiter)
+  rho = as.double(rho)
   if (!check_param_constant(rho,0)){
-    stop("* ADMM.LASSO : 'rho' should be a positive real number.")
+    stop("* ADMM.ENET : 'rho' should be a positive real number.")
   }
-  if (!check_param_constant(alpha,0)){
-    stop("* ADMM.LASSO : 'alpha' should be a positive real number.")
+  # adjust for Xiaozhi's code
+  negsmall = (-(.Machine$double.eps))
+  lambda1 = as.double(lambda1)
+  lambda2 = as.double(lambda2)
+  if (!check_param_constant(lambda1, negsmall)){
+    stop("* ADMM.ENET : 'lambda1' is invalid.")
   }
-  if ((alpha<1)||(alpha>2)){
-    warning("* ADMM.LASSO : 'alpha' value is suggested to be in [1,2].")
+  if (!check_param_constant(lambda2, negsmall)){
+    stop("* ADMM.ENET : 'lambda2' is invalid.")
   }
+  if ((lambda1==0)&&(lambda2==0)){
+    stop("* ADMM.ENET : if both regularization parameters are zero, please use least-squares solution.")
+  }
+  lambda = (2*lambda2 + lambda1)
+  alpha  = (lambda1/lambda)
 
-  ## MAIN COMPUTATION & RESULT RETURN
-  result = admm_lasso(A,b,lambda,xinit,reltol,abstol,maxiter,rho,alpha)
+  #-----------------------------------------------------------
+  ## MAIN COMPUTATION
+  result = admm_enet(A,b,lambda,alpha,reltol,abstol,maxiter,rho)
 
+  #-----------------------------------------------------------
   ## RESULT RETURN
   kk = result$k
   output = list()

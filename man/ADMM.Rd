@@ -11,5 +11,15 @@ An introduction of Alternating Direction Method of Multipliers (ADMM) method has
 solving complex and non-convex optimization problems in a reasonably stable as well as scalable fashion.
 Our package aims at providing handy tools for fast computation on well-known problems using the method.
 For interested users/readers, please visit Prof. Stephen Boyd's \href{http://stanford.edu/~boyd/papers/admm_distr_stats.html}{website}
-entirely devoted to the topic.
+entirely devoted to the topic. Below is the list of functions supported,
+\tabular{cl}{
+FUNCTION \tab Algorithm \cr
+\code{\link{admm.bp}} \tab Basis Pursuit \cr
+\code{\link{admm.enet}} \tab Elastic Net Regularization \cr
+\code{\link{admm.lad}} \tab Least Absolute Deviations \cr
+\code{\link{admm.lasso}} \tab Least Absolute Shrinkage and Selection Operator \cr
+\code{\link{admm.rpca}} \tab Robust Principal Component Analysis \cr
+\code{\link{admm.spca}} \tab Sparse Principal Component Analysis \cr
+\code{\link{admm.tv}} \tab Total Variation Minimization
+}
 }

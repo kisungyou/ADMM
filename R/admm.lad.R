@@ -1,7 +1,7 @@
 #' Least Absolute Deviations
 #'
 #' Least Absolute Deviations (LAD) is an alternative to traditional Least Sqaures by using cost function
-#' \deqn{min_x ~ \|Ax-b\|_1}
+#' \deqn{\textrm{min}_x ~ \|Ax-b\|_1}
 #' to use \eqn{\ell_1} norm instead of square loss for robust estimation of coefficient.
 #'
 #'

@@ -30,14 +30,14 @@ a named list containing \describe{
 }
 \description{
 Sparse Principal Component Analysis aims at finding a sparse vector by solving
-\deqn{max_x~x^T\Sigma x \quad \textrm{s.t.} \quad \|x\|_2\le 1,~\|x\|_0\le K}
+\deqn{\textrm{max}_x~x^T\Sigma x \quad \textrm{s.t.} \quad \|x\|_2\le 1,~\|x\|_0\le K}
 where \eqn{\|x\|_0} is the number of non-zero elements in a vector \eqn{x}. A convex relaxation
 of this problem was proposed to solve the following problem,
-\deqn{max_X~<\Sigma,X> ~\textrm{s.t.} \quad Tr(X)=1,~\|X\|_0 \le K^2, ~X\ge 0,~\textrm{rank}(X)=1}
+\deqn{\textrm{max}_X~<\Sigma,X> ~\textrm{s.t.} \quad Tr(X)=1,~\|X\|_0 \le K^2, ~X\ge 0,~\textrm{rank}(X)=1}
 where \eqn{X=xx^T} is a \eqn{(p\times p)} matrix that is outer product of a vector \eqn{x} by itself,
 and \eqn{X\ge 0} means the matrix \eqn{X} is positive semidefinite.
 With the rank condition dropped, it can be restated as
-\deqn{max_X~ <\Sigma,X>-\rho\|X\|_1 \quad \textrm{s.t.}\quad Tr(X)=1,X\ge 0.}
+\deqn{\textrm{max}_X~ <\Sigma,X>-\rho\|X\|_1 \quad \textrm{s.t.}\quad Tr(X)=1,X\ge 0.}
 After acquiring each principal component vector, an iterative step based on Schur complement deflation method
 is applied to regress out the impact of previously-computed projection vectors. It should be noted that
 those sparse basis may \emph{not be orthonormal}.

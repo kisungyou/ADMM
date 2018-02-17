@@ -2,7 +2,7 @@
 #'
 #' 1-dimensional total variation minimization - also known as
 #' signal denoising - is to solve the following
-#' \deqn{min_x ~ \frac{1}{2}\|x-b\|_2^2 + \lambda \sum_i |x_{i+1}-x_i|}
+#' \deqn{\textrm{min}_x ~ \frac{1}{2}\|x-b\|_2^2 + \lambda \sum_i |x_{i+1}-x_i|}
 #' for a given signal \eqn{b}.
 #' The implementation is borrowed from Stephen Boyd's
 #' \href{http://stanford.edu/~boyd/papers/admm/total_variation/total_variation.html}{MATLAB code}.

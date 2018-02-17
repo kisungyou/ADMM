@@ -10,7 +10,7 @@ admm.rpca(M, lambda = 1/sqrt(max(nrow(M), ncol(M))), mu = 1, tol = 1e-07,
 \arguments{
 \item{M}{an \eqn{(m\times n)} data matrix}
 
-\item{lambda}{a regularization parameber}
+\item{lambda}{a regularization parameter}
 
 \item{mu}{an augmented Lagrangian parameter}
 
@@ -27,7 +27,7 @@ a named list containing \describe{
 }
 \description{
 Given a data matrix \eqn{M}, it finds a decomposition
-\deqn{min~\|L\|_*+\lambda \|S\|_1\quad \textrm{s.t.}\quad L+S=M}
+\deqn{\textrm{min}~\|L\|_*+\lambda \|S\|_1\quad \textrm{s.t.}\quad L+S=M}
 where \eqn{\|L\|_*} represents a nuclear norm for a matrix \eqn{L} and
 \eqn{\|S\|_1 = \sum |S_{i,j}|}, and \eqn{\lambda} a balancing/regularization
 parameter. The choice of such norms leads to impose \emph{low-rank} property for \eqn{L} and

@@ -24,6 +24,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// admm_enet
+Rcpp::List admm_enet(const arma::mat& A, const arma::colvec& b, const double lambda, const double alpha, const double reltol, const double abstol, const int maxiter, const double rho);
+RcppExport SEXP _ADMM_admm_enet(SEXP ASEXP, SEXP bSEXP, SEXP lambdaSEXP, SEXP alphaSEXP, SEXP reltolSEXP, SEXP abstolSEXP, SEXP maxiterSEXP, SEXP rhoSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type A(ASEXP);
+    Rcpp::traits::input_parameter< const arma::colvec& >::type b(bSEXP);
+    Rcpp::traits::input_parameter< const double >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< const double >::type alpha(alphaSEXP);
+    Rcpp::traits::input_parameter< const double >::type reltol(reltolSEXP);
+    Rcpp::traits::input_parameter< const double >::type abstol(abstolSEXP);
+    Rcpp::traits::input_parameter< const int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< const double >::type rho(rhoSEXP);
+    rcpp_result_gen = Rcpp::wrap(admm_enet(A, b, lambda, alpha, reltol, abstol, maxiter, rho));
+    return rcpp_result_gen;
+END_RCPP
+}
 // admm_lad
 Rcpp::List admm_lad(const arma::mat& A, const arma::colvec& b, arma::colvec& xinit, const double reltol, const double abstol, const int maxiter, const double rho, const double alpha);
 RcppExport SEXP _ADMM_admm_lad(SEXP ASEXP, SEXP bSEXP, SEXP xinitSEXP, SEXP reltolSEXP, SEXP abstolSEXP, SEXP maxiterSEXP, SEXP rhoSEXP, SEXP alphaSEXP) {
@@ -113,6 +131,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ADMM_admm_bp", (DL_FUNC) &_ADMM_admm_bp, 8},
+    {"_ADMM_admm_enet", (DL_FUNC) &_ADMM_admm_enet, 8},
     {"_ADMM_admm_lad", (DL_FUNC) &_ADMM_admm_lad, 8},
     {"_ADMM_admm_lasso", (DL_FUNC) &_ADMM_admm_lasso, 9},
     {"_ADMM_admm_rpca", (DL_FUNC) &_ADMM_admm_rpca, 5},

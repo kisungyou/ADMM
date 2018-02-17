@@ -2,7 +2,7 @@
 % Please edit documentation in R/admm.lasso.R
 \name{admm.lasso}
 \alias{admm.lasso}
-\title{LASSO}
+\title{Least Absolute Shrinkage and Selection Operator}
 \usage{
 admm.lasso(A, b, lambda = 1, xinit = NA, rho = 1, alpha = 1,
   abstol = 1e-04, reltol = 0.01, maxiter = 1000)
@@ -12,7 +12,7 @@ admm.lasso(A, b, lambda = 1, xinit = NA, rho = 1, alpha = 1,
 
 \item{b}{a length-\eqn{m} response vector}
 
-\item{lambda}{a regularization parameber}
+\item{lambda}{a regularization parameter}
 
 \item{xinit}{a length-\eqn{n} vector for initial value}
 
@@ -34,7 +34,7 @@ a named list containing \describe{
 }
 \description{
 LASSO, or L1-regularized regression, is an optimization problem to solve
-\deqn{min_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|x\|_1}
+\deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|x\|_1}
 for sparsifying the coefficient vector \eqn{x}.
 The implementation is borrowed from Stephen Boyd's
 \href{http://stanford.edu/~boyd/papers/admm/lasso/lasso.html}{MATLAB code}.

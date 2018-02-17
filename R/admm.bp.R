@@ -2,7 +2,7 @@
 #'
 #' For an underdetermined system, Basis Pursuit
 #' aims to find a sparse solution that solves
-#' \deqn{min_x ~  \|x\|_1 \quad \textrm{s.t} \quad Ax=b}
+#' \deqn{\textrm{min}_x ~  \|x\|_1 \quad \textrm{s.t} \quad Ax=b}
 #' which is a relaxed version of strict non-zero support finding problem.
 #' The implementation is borrowed from Stephen Boyd's
 #' \href{https://web.stanford.edu/~boyd/papers/admm/basis_pursuit/basis_pursuit.html}{MATLAB code}.

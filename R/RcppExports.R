@@ -9,6 +9,12 @@ admm_bp <- function(A, b, xinit, reltol, abstol, maxiter, rho, alpha) {
 
 #' @keywords internal
 #' @noRd
+admm_enet <- function(A, b, lambda, alpha, reltol, abstol, maxiter, rho) {
+    .Call('_ADMM_admm_enet', PACKAGE = 'ADMM', A, b, lambda, alpha, reltol, abstol, maxiter, rho)
+}
+
+#' @keywords internal
+#' @noRd
 admm_lad <- function(A, b, xinit, reltol, abstol, maxiter, rho, alpha) {
     .Call('_ADMM_admm_lad', PACKAGE = 'ADMM', A, b, xinit, reltol, abstol, maxiter, rho, alpha)
 }
