@@ -90,7 +90,8 @@ admm.enet <- function(A, b,
     stop("* ADMM.ENET : 'rho' should be a positive real number.")
   }
   # adjust for Xiaozhi's code
-  negsmall = (-(.Machine$double.eps))
+  meps = (.Machine$double.eps)
+  negsmall = -meps
   lambda1 = as.double(lambda1)
   lambda2 = as.double(lambda2)
   if (!check_param_constant(lambda1, negsmall)){
@@ -99,8 +100,12 @@ admm.enet <- function(A, b,
   if (!check_param_constant(lambda2, negsmall)){
     stop("* ADMM.ENET : 'lambda2' is invalid.")
   }
-  if ((lambda1==0)&&(lambda2==0)){
-    stop("* ADMM.ENET : if both regularization parameters are zero, please use least-squares solution.")
+  if ((lambda1<meps)&&(lambda2<meps)){
+    message("* ADMM.ENET : since both regularization parameters are effectively zero, a least-squares solution is returned.")
+    xsol   = as.vector(aux_pinv(A)%*%matrix(b))
+    output = list()
+    output$x = xsol
+    return(output)
   }
   lambda = (2*lambda2 + lambda1)
   alpha  = (lambda1/lambda)

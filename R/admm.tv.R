@@ -9,7 +9,7 @@
 #'
 #' @param b a length-\eqn{m} response vector
 #' @param lambda regularization parameter
-#' @param xinit a length\eqn{m} vector for initial value
+#' @param xinit a length-\eqn{m} vector for initial value
 #' @param rho an augmented Lagrangian parameter
 #' @param alpha an overrelaxation parameter in \eqn{[1,2]}
 #' @param abstol absolute tolerance stopping criterion

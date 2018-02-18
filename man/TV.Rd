@@ -12,7 +12,7 @@ admm.tv(b, lambda = 1, xinit = NA, rho = 1, alpha = 1, abstol = 1e-04,
 
 \item{lambda}{regularization parameter}
 
-\item{xinit}{a length\eqn{m} vector for initial value}
+\item{xinit}{a length-\eqn{m} vector for initial value}
 
 \item{rho}{an augmented Lagrangian parameter}
 

@@ -68,6 +68,7 @@ check_param_integer <- function(num, lowerbound=0){
 
 
 # auxiliary computations --------------------------------------------------
+# 1. Regularized LU decomposition
 #' @keywords internal
 #' @noRd
 boyd_factor <- function(A, rho){
@@ -82,4 +83,19 @@ boyd_factor <- function(A, rho){
   output = list()
   output$L = t(U)
   output$U = U
+}
+# 2. PseudoInverse using SVD and NumPy Scheme
+# https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD)
+#' @keywords internal
+#' @noRd
+aux_pinv <- function(A){
+  svdA      = base::svd(A)
+  tolerance = (.Machine$double.eps)*max(c(nrow(A),ncol(A)))*as.double(max(svdA$d))
+
+  idxcut    = which(svdA$d <= tolerance)
+  invDvec   = (1/svdA$d)
+  invDvec[idxcut] = 0
+
+  output = (svdA$v%*%diag(invDvec)%*%t(svdA$u))
+  return(output)
 }

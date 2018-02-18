@@ -88,9 +88,21 @@ admm.lasso <- function(A, b, lambda=1.0, xinit=NA,
     xinit = as.vector(rep(0,ncol(A)))
   }
   # other parameters
-  if (!check_param_constant(lambda)){
+  meps = (.Machine$double.eps)
+  negsmall = -meps
+  if (!check_param_constant(lambda,negsmall)){
     stop("* ADMM.LASSO : reg. parameter 'lambda' is invalid.")
   }
+  if (lambda < meps){
+    message("* ADMM.LASSO : since 'lambda' is effectively zero, a least-squares solution is returned.")
+    xsol   = as.vector(aux_pinv(A)%*%matrix(b))
+    output = list()
+    output$x = xsol
+    return(output)
+  }
+
+
+
   if (!check_param_constant_multiple(c(abstol, reltol))){
     stop("* ADMM.LASSO : tolerance level is invalid.")
   }
@@ -107,6 +119,10 @@ admm.lasso <- function(A, b, lambda=1.0, xinit=NA,
   if ((alpha<1)||(alpha>2)){
     warning("* ADMM.LASSO : 'alpha' value is suggested to be in [1,2].")
   }
+
+
+
+
 
   ## MAIN COMPUTATION & RESULT RETURN
   result = admm_lasso(A,b,lambda,xinit,reltol,abstol,maxiter,rho,alpha)
