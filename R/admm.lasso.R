@@ -36,8 +36,8 @@
 #'
 #' @examples
 #' ## generate sample data
-#' m = 500
-#' n = 1000
+#' m = 50
+#' n = 100
 #' p = 0.1   # percentange of non-zero elements
 #'
 #' x0 = matrix(Matrix::rsparsematrix(n,1,p))

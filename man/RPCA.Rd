@@ -45,7 +45,7 @@ for each iteration step \eqn{k}. So for this method, we provide a vector of only
 
 \examples{
 ## generate data matrix from standard normal
-X = matrix(rnorm(100*50),nrow=50)
+X = matrix(rnorm(20*5),nrow=5)
 
 ## try different regularization values
 out1 = admm.rpca(X, lambda=0.01)
