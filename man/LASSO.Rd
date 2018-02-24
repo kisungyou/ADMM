@@ -4,8 +4,8 @@
 \alias{admm.lasso}
 \title{Least Absolute Shrinkage and Selection Operator}
 \usage{
-admm.lasso(A, b, lambda = 1, xinit = NA, rho = 1, alpha = 1,
-  abstol = 1e-04, reltol = 0.01, maxiter = 1000)
+admm.lasso(A, b, lambda = 1, rho = 1, alpha = 1, abstol = 1e-04,
+  reltol = 0.01, maxiter = 1000)
 }
 \arguments{
 \item{A}{an \eqn{(m\times n)} regressor matrix}
@@ -13,8 +13,6 @@ admm.lasso(A, b, lambda = 1, xinit = NA, rho = 1, alpha = 1,
 \item{b}{a length-\eqn{m} response vector}
 
 \item{lambda}{a regularization parameter}
-
-\item{xinit}{a length-\eqn{n} vector for initial value}
 
 \item{rho}{an augmented Lagrangian parameter}
 

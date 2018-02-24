@@ -9,7 +9,6 @@
 #' @param A an \eqn{(m\times n)} regressor matrix
 #' @param b a length-\eqn{m} response vector
 #' @param lambda a regularization parameter
-#' @param xinit a length-\eqn{n} vector for initial value
 #' @param rho an augmented Lagrangian parameter
 #' @param alpha an overrelaxation parameter in [1,2]
 #' @param abstol absolute tolerance stopping criterion
@@ -65,8 +64,7 @@
 #'
 #' @rdname LASSO
 #' @export
-admm.lasso <- function(A, b, lambda=1.0, xinit=NA,
-                    rho=1.0, alpha=1.0,
+admm.lasso <- function(A, b, lambda=1.0, rho=1.0, alpha=1.0,
                     abstol=1e-4, reltol=1e-2, maxiter=1000){
   ## PREPROCESSING
   # data validity
@@ -79,14 +77,17 @@ admm.lasso <- function(A, b, lambda=1.0, xinit=NA,
   if (nrow(A)!=length(b)){
     stop("* ADMM.LASSO : two inputs 'A' and 'b' have non-matching dimension.")}
   # initial value
-  if (!is.na(xinit)){
-    if ((!check_data_vector(xinit))||(length(xinit)!=ncol(A))){
-      stop("* ADMM.LASSO : input 'xinit' is invalid.")
-    }
-    xinit = as.vector(xinit)
-  } else {
-    xinit = as.vector(rep(0,ncol(A)))
-  }
+  xinit = as.vector(rnorm(ncol(A))/10)
+  # if (!is.na(xinit)){
+  #   if ((!check_data_vector(xinit))||(length(xinit)!=ncol(A))){
+  #     stop("* ADMM.LASSO : input 'xinit' is invalid.")
+  #   }
+  #   xinit = as.vector(xinit)
+  # } else {
+  #   xinit = as.vector(rep(0,ncol(A)))
+  # }
+
+
   # other parameters
   meps = (.Machine$double.eps)
   negsmall = -meps

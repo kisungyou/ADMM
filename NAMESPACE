@@ -2,6 +2,7 @@
 
 export(admm.bp)
 export(admm.enet)
+export(admm.genlasso)
 export(admm.lad)
 export(admm.lasso)
 export(admm.rpca)
