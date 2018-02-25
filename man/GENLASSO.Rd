@@ -2,18 +2,60 @@
 % Please edit documentation in R/admm.genlasso.R
 \name{admm.genlasso}
 \alias{admm.genlasso}
-\title{Generalized Lasso}
+\title{Generalized LASSO}
 \usage{
 admm.genlasso(A, b, D = diag(length(b)), lambda = 1, rho = 1, alpha = 1,
   abstol = 1e-04, reltol = 0.01, maxiter = 1000)
 }
-\details{
-\deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|Dx\|_1}
+\arguments{
+\item{A}{an \eqn{(m\times n)} regressor matrix}
+
+\item{b}{a length-\eqn{m} response vector}
+
+\item{D}{a regularization matrix of \eqn{n} columns}
+
+\item{lambda}{a regularization parameter}
+
+\item{rho}{an augmented Lagrangian parameter}
+
+\item{alpha}{an overrelaxation parameter in [1,2]}
+
+\item{abstol}{absolute tolerance stopping criterion}
+
+\item{reltol}{relative tolerance stopping criterion}
+
+\item{maxiter}{maximum number of iterations}
 }
+\value{
+a named list containing \describe{
+\item{x}{a length-\eqn{n} solution vector}
+\item{history}{dataframe recording iteration numerics. See the section for more details.}
+}
+}
+\description{
+Generalized LASSO is solving the following equation,
+\deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|Dx\|_1}
+where the choice of regularization matrix \eqn{D} leads to different problem formulations.
+}
+\section{Iteration History}{
+
+When you run the algorithm, output returns not only the solution, but also the iteration history recording
+following fields over iterates,
+\describe{
+\item{objval}{object (cost) function value}
+\item{r_norm}{norm of primal residual}
+\item{s_norm}{norm of dual residual}
+\item{eps_pri}{feasibility tolerance for primal feasibility condition}
+\item{eps_dual}{feasibility tolerance for dual feasibility condition}
+}
+In accordance with the paper, iteration stops when both \code{r_norm} and \code{s_norm} values
+become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
+}
+
 \examples{
 ## generate sample data
-m = 500
-n = 1000
+m = 100
+n = 200
 p = 0.1   # percentange of non-zero elements
 
 x0 = matrix(Matrix::rsparsematrix(n,1,p))
@@ -38,5 +80,12 @@ plot(1:niter, output$history$objval, "b", main="cost function")
 plot(1:niter, output$history$r_norm, "b", main="primal residual")
 plot(1:niter, output$history$s_norm, "b", main="dual residual")
 
+}
+\references{
+\insertRef{tibshirani_solution_2011}{ADMM}
 
+\insertRef{zhu_augmented_2017}{ADMM}
+}
+\author{
+Xiaozhi Zhu
 }

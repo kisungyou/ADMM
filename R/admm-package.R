@@ -9,6 +9,7 @@
 #' FUNCTION \tab Algorithm \cr
 #' \code{\link{admm.bp}} \tab Basis Pursuit \cr
 #' \code{\link{admm.enet}} \tab Elastic Net Regularization \cr
+#' \code{\link{admm.genlasso}} \tab Generalized LASSO \cr
 #' \code{\link{admm.lad}} \tab Least Absolute Deviations \cr
 #' \code{\link{admm.lasso}} \tab Least Absolute Shrinkage and Selection Operator \cr
 #' \code{\link{admm.rpca}} \tab Robust Principal Component Analysis \cr
@@ -22,6 +23,7 @@
 #' @import Rdpack
 #' @import Matrix
 #' @importFrom Rcpp evalCpp
+#' @importFrom stats rnorm
 #' @useDynLib ADMM
 NULL
 

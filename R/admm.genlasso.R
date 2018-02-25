@@ -1,14 +1,42 @@
-#' Generalized Lasso
+#' Generalized LASSO
 #'
-#'
-#'
+#' Generalized LASSO is solving the following equation,
 #' \deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|Dx\|_1}
+#' where the choice of regularization matrix \eqn{D} leads to different problem formulations.
+#'
+#' @param A an \eqn{(m\times n)} regressor matrix
+#' @param b a length-\eqn{m} response vector
+#' @param D a regularization matrix of \eqn{n} columns
+#' @param lambda a regularization parameter
+#' @param rho an augmented Lagrangian parameter
+#' @param alpha an overrelaxation parameter in [1,2]
+#' @param abstol absolute tolerance stopping criterion
+#' @param reltol relative tolerance stopping criterion
+#' @param maxiter maximum number of iterations
+#'
+#' @return a named list containing \describe{
+#' \item{x}{a length-\eqn{n} solution vector}
+#' \item{history}{dataframe recording iteration numerics. See the section for more details.}
+#' }
+#'
+#' @section Iteration History:
+#' When you run the algorithm, output returns not only the solution, but also the iteration history recording
+#' following fields over iterates,
+#' \describe{
+#' \item{objval}{object (cost) function value}
+#' \item{r_norm}{norm of primal residual}
+#' \item{s_norm}{norm of dual residual}
+#' \item{eps_pri}{feasibility tolerance for primal feasibility condition}
+#' \item{eps_dual}{feasibility tolerance for dual feasibility condition}
+#' }
+#' In accordance with the paper, iteration stops when both \code{r_norm} and \code{s_norm} values
+#' become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 #'
 #'
 #' @examples
 #' ## generate sample data
-#' m = 500
-#' n = 1000
+#' m = 100
+#' n = 200
 #' p = 0.1   # percentange of non-zero elements
 #'
 #' x0 = matrix(Matrix::rsparsematrix(n,1,p))
@@ -33,7 +61,12 @@
 #' plot(1:niter, output$history$r_norm, "b", main="primal residual")
 #' plot(1:niter, output$history$s_norm, "b", main="dual residual")
 #'
+#' @references
+#' \insertRef{tibshirani_solution_2011}{ADMM}
 #'
+#' \insertRef{zhu_augmented_2017}{ADMM}
+#'
+#' @author Xiaozhi Zhu
 #' @rdname GENLASSO
 #' @export
 admm.genlasso <- function(A, b, D=diag(length(b)), lambda=1.0, rho=1.0, alpha=1.0,
