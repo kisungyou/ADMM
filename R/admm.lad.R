@@ -34,6 +34,7 @@
 #'
 #'
 #' @examples
+#' \dontrun{
 #' ## generate data
 #' m = 1000
 #' n = 100
@@ -54,6 +55,7 @@
 #' plot(1:niter, output$history$objval, "b", main="cost function")
 #' plot(1:niter, output$history$r_norm, "b", main="primal residual")
 #' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' }
 #'
 #'
 #' @rdname LAD

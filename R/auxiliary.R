@@ -67,7 +67,8 @@ check_param_integer <- function(num, lowerbound=0){
 
 
 
-# auxiliary computations --------------------------------------------------
+# AUXILIARY COMPUTATIONS --------------------------------------------------
+#   -----------------------------------------------------------------------
 # 1. Regularized LU decomposition
 #' @keywords internal
 #' @noRd
@@ -84,6 +85,7 @@ boyd_factor <- function(A, rho){
   output$L = t(U)
   output$U = U
 }
+#   -----------------------------------------------------------------------
 # 2. PseudoInverse using SVD and NumPy Scheme
 # https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse#Singular_value_decomposition_(SVD)
 #' @keywords internal
@@ -98,4 +100,89 @@ aux_pinv <- function(A){
 
   output = (svdA$v%*%diag(invDvec)%*%t(svdA$u))
   return(output)
+}
+#   -----------------------------------------------------------------------
+# 3. updatd for genenet
+#' inversion : use half of the cores
+#'
+#'
+#'
+#' @export
+aux_genetinversion <- function(A,rho,L,R,lambda2,parallel=FALSE,nCore=ceiling(detectCores()/2)){
+  # -----------------------------------------------------------------------
+  # for the checker part, I pass, only need to
+
+  # -----------------------------------------------------------------------
+  # case 1 : lambda2 is a single value
+  if (length(lambda2)==1){
+    mat = aux_pinv((t(A)%*%A)+rho*(t(L)%*%L)+2*lambda2*(t(R)%*%R))
+    return(mat)
+  } else {
+    # -----------------------------------------------------------------------
+    # case 2 : lambda2 is a vector of lambda values
+    if (parallel==TRUE){
+      nCore   = max(1, as.integer(nCore))
+      nlambda = length(lambda2)
+      p       = ncol(A)
+
+      cl = makeCluster(nCore)
+      registerDoParallel(cl)
+
+      iteach = NULL
+      output = foreach (iteach=1:nlambda, .combine = cbind) %dopar% {
+        aux_pinv((t(A)%*%A)+rho*(t(L)%*%L)+2*lambda2[iteach]*(t(R)%*%R))
+      }
+      stopCluster(cl)
+
+      dim(output) = c(p,p,nlambda)
+      return(output)
+    } else { # this is CPP part
+      output = multipleinversion(A,rho,L,R,lambda2)
+      return(output)
+    }
+  }
+}
+
+# test1  : parallel (of R) : 1830803 vs 3986 : Sequential is Better
+# microbenchmark("job1"={output1=aux_genetinversion(A,rho,L,R,lambda2,parallel=TRUE,nCore=1)},
+#                "job2"={output2=aux_genetinversion(A,rho,L,R,lambda2,parallel=FALSE)}, times=10)
+# test2  : number of Cores : not necessarily better to use more cores
+#
+# result : simply use RCPP VERSION : it is much faster
+
+
+#   -----------------------------------------------------------------------
+# 4. Laplacian L to R matrix : L = R^T * R
+#'
+#'
+#'
+#' @keywords internal
+#' @noRd
+aux_laplacian2R <- function(L,size="auto"){
+  if (!isSymmetric(L)){
+    stop("we need symmetric matrix anyway.")
+  }
+  # possibly the rank
+  rL = as.integer(Matrix::rankMatrix(L))
+  if (size=="auto"){
+    size = rL
+  } else {
+    size = as.integer(size)
+    if (size>rL){
+      message("* laplacian... hmm... auto adjust!")
+      size=rL
+    }
+  }
+
+  # use top eigenpairs
+  eigL  = base::eigen(L)
+  V     = eigL$vectors[,1:size]
+  # for (i in 1:size){
+  #   vecV  = as.vector(V[,i])
+  #   normV = sqrt(sum(vecV*vecV))
+  #   V[,i] = V[,i]/normV
+  # }
+  Dhalf = as.vector(sqrt(eigL$values[1:size]))
+  R     = (diag(Dhalf)%*%t(V))
+  return(R)
 }

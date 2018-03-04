@@ -9,7 +9,7 @@ Description: Provides algorithms to solve popular optimization problems in stati
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
-Imports: Rcpp, Matrix, Rdpack, stats
+Imports: Rcpp, Matrix, Rdpack, stats, doParallel, foreach, parallel
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.0.1
 RdMacros: Rdpack

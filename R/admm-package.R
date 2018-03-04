@@ -24,6 +24,9 @@
 #' @import Matrix
 #' @importFrom Rcpp evalCpp
 #' @importFrom stats rnorm
+#' @importFrom foreach "%dopar%" foreach registerDoSEQ
+#' @importFrom parallel detectCores stopCluster makeCluster
+#' @importFrom doParallel registerDoParallel
 #' @useDynLib ADMM
 NULL
 

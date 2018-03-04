@@ -6,6 +6,21 @@
 
 using namespace Rcpp;
 
+// multipleinversion
+arma::cube multipleinversion(arma::mat A, double rho, arma::mat L, arma::mat R, arma::vec lambda2);
+RcppExport SEXP _ADMM_multipleinversion(SEXP ASEXP, SEXP rhoSEXP, SEXP LSEXP, SEXP RSEXP, SEXP lambda2SEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type A(ASEXP);
+    Rcpp::traits::input_parameter< double >::type rho(rhoSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::mat >::type R(RSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type lambda2(lambda2SEXP);
+    rcpp_result_gen = Rcpp::wrap(multipleinversion(A, rho, L, R, lambda2));
+    return rcpp_result_gen;
+END_RCPP
+}
 // admm_bp
 Rcpp::List admm_bp(const arma::mat& A, const arma::colvec& b, arma::colvec& xinit, const double reltol, const double abstol, const int maxiter, const double rho, const double alpha);
 RcppExport SEXP _ADMM_admm_bp(SEXP ASEXP, SEXP bSEXP, SEXP xinitSEXP, SEXP reltolSEXP, SEXP abstolSEXP, SEXP maxiterSEXP, SEXP rhoSEXP, SEXP alphaSEXP) {
@@ -148,6 +163,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_ADMM_multipleinversion", (DL_FUNC) &_ADMM_multipleinversion, 5},
     {"_ADMM_admm_bp", (DL_FUNC) &_ADMM_admm_bp, 8},
     {"_ADMM_admm_enet", (DL_FUNC) &_ADMM_admm_enet, 8},
     {"_ADMM_admm_genlasso", (DL_FUNC) &_ADMM_admm_genlasso, 8},

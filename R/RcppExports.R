@@ -3,6 +3,12 @@
 
 #' @keywords internal
 #' @noRd
+multipleinversion <- function(A, rho, L, R, lambda2) {
+    .Call('_ADMM_multipleinversion', PACKAGE = 'ADMM', A, rho, L, R, lambda2)
+}
+
+#' @keywords internal
+#' @noRd
 admm_bp <- function(A, b, xinit, reltol, abstol, maxiter, rho, alpha) {
     .Call('_ADMM_admm_bp', PACKAGE = 'ADMM', A, b, xinit, reltol, abstol, maxiter, rho, alpha)
 }
