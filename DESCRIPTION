@@ -1,7 +1,7 @@
 Package: ADMM
 Type: Package
 Title: Algorithms using Alternating Direction Method of Multipliers
-Version: 0.2.3
+Version: 0.3.0
 Authors@R: c(person("Kisung", "You", role = c("aut", "cre"),
                      email = "kyou@nd.edu",comment=c(ORCID="0000-0002-8584-459X")),person("Xiaozhi","Zhu",role="aut",email="xzhu4@nd.edu"))
 Description: Provides algorithms to solve popular optimization problems in statistics such as regression or denoising based on Alternating Direction Method of Multipliers (ADMM).

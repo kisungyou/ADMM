@@ -53,6 +53,7 @@ become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 }
 
 \examples{
+\dontrun{
 ## generate sample data
 m = 50
 n = 100
@@ -77,6 +78,7 @@ par(mfrow=c(1,3))
 plot(1:niter, output$history$objval, "b", main="cost function")
 plot(1:niter, output$history$r_norm, "b", main="primal residual")
 plot(1:niter, output$history$s_norm, "b", main="dual residual")
+}
 
 }
 \references{

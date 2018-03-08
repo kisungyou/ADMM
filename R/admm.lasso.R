@@ -34,6 +34,7 @@
 #' become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 #'
 #' @examples
+#' \dontrun{
 #' ## generate sample data
 #' m = 50
 #' n = 100
@@ -58,6 +59,7 @@
 #' plot(1:niter, output$history$objval, "b", main="cost function")
 #' plot(1:niter, output$history$r_norm, "b", main="primal residual")
 #' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' }
 #'
 #' @references
 #' \insertRef{tibshirani_regression_1996}{ADMM}
@@ -140,3 +142,22 @@ admm.lasso <- function(A, b, lambda=1.0, rho=1.0, alpha=1.0,
   )
   return(output)
 }
+
+#
+# lcost <- function(x){diff = as.vector(A%*%x-b); return((sum(diff*diff)/2)+lambda*sum(abs(x)))}
+
+#
+# 1. https://stackoverflow.com/questions/2247111/evaluating-variable-within-r-loop
+# multiply <- function(i) {
+#   force(i)
+#   function(x) x * i
+# }
+# funcs <- list()
+# for(i in 1:21){
+#   funcName <- paste( 'func', i, sep = '' )
+#   funcs[[funcName]] = multiply(i)
+# }
+#
+# 2. https://stackoverflow.com/questions/15627701/r-scope-force-variable-substitution-in-function-without-local-environment?noredirect=1&lq=1
+#
+# 3. https://stackoverflow.com/questions/32100372/calling-functions-from-a-list-recursively?noredirect=1&lq=1

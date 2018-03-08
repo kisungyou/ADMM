@@ -107,7 +107,8 @@ aux_pinv <- function(A){
 #'
 #'
 #'
-#' @export
+#' @keywords internal
+#' @noRd
 aux_genetinversion <- function(A,rho,L,R,lambda2,parallel=FALSE,nCore=ceiling(detectCores()/2)){
   # -----------------------------------------------------------------------
   # for the checker part, I pass, only need to
