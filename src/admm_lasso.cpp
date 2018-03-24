@@ -88,7 +88,7 @@ Rcpp::List admm_lasso(const arma::mat& A, const arma::colvec& b, const double la
     // 4-2. update 'z' with relaxation
     zold = z;
     x_hat = alpha*x + (1 - alpha)*zold;
-    z = lasso_shrinkage(x_hat + u, 1/rho);
+    z = lasso_shrinkage(x_hat + u, lambda/rho);
 
     // 4-3. update 'u'
     u = u + (x_hat - z);
