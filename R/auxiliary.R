@@ -103,10 +103,7 @@ aux_pinv <- function(A){
 }
 #   -----------------------------------------------------------------------
 # 3. updatd for genenet
-#' inversion : use half of the cores
-#'
-#'
-#'
+# inversion : use half of the cores
 #' @keywords internal
 #' @noRd
 aux_genetinversion <- function(A,rho,L,R,lambda2,parallel=FALSE,nCore=ceiling(detectCores()/2)){
@@ -154,9 +151,6 @@ aux_genetinversion <- function(A,rho,L,R,lambda2,parallel=FALSE,nCore=ceiling(de
 
 #   -----------------------------------------------------------------------
 # 4. Laplacian L to R matrix : L = R^T * R
-#'
-#'
-#'
 #' @keywords internal
 #' @noRd
 aux_laplacian2R <- function(L,size="auto"){
