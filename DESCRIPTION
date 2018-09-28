@@ -1,7 +1,7 @@
 Package: ADMM
 Type: Package
 Title: Algorithms using Alternating Direction Method of Multipliers
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(person("Kisung", "You", role = c("aut", "cre"),
                      email = "kyou@nd.edu",comment=c(ORCID="0000-0002-8584-459X")),person("Xiaozhi","Zhu",role="aut",email="xzhu4@nd.edu"))
 Description: Provides algorithms to solve popular optimization problems in statistics such as regression or denoising based on Alternating Direction Method of Multipliers (ADMM).
@@ -11,5 +11,5 @@ Encoding: UTF-8
 LazyData: true
 Imports: Rcpp, Matrix, Rdpack, stats, doParallel, foreach, parallel
 LinkingTo: Rcpp, RcppArmadillo
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 RdMacros: Rdpack

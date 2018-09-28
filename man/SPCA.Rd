@@ -4,8 +4,8 @@
 \alias{admm.spca}
 \title{Sparse PCA}
 \usage{
-admm.spca(Sigma, numpc, mu = 1, rho = 1, abstol = 1e-04, reltol = 0.01,
-  maxiter = 1000)
+admm.spca(Sigma, numpc, mu = 1, rho = 1, abstol = 1e-04,
+  reltol = 0.01, maxiter = 1000)
 }
 \arguments{
 \item{Sigma}{a \eqn{(p\times p)} (sample) covariance matrix.}

@@ -4,7 +4,6 @@
 \name{ADMM}
 \alias{ADMM}
 \alias{ADMM-package}
-\alias{ADMM-package}
 \title{ADMM : Algorithms using Alternating Direction Method of Multipliers}
 \description{
 An introduction of Alternating Direction Method of Multipliers (ADMM) method has been a breakthrough in

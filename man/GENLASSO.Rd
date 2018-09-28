@@ -4,8 +4,8 @@
 \alias{admm.genlasso}
 \title{Generalized LASSO}
 \usage{
-admm.genlasso(A, b, D = diag(length(b)), lambda = 1, rho = 1, alpha = 1,
-  abstol = 1e-04, reltol = 0.01, maxiter = 1000)
+admm.genlasso(A, b, D = diag(length(b)), lambda = 1, rho = 1,
+  alpha = 1, abstol = 1e-04, reltol = 0.01, maxiter = 1000)
 }
 \arguments{
 \item{A}{an \eqn{(m\times n)} regressor matrix}
