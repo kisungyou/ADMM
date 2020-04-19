@@ -4,8 +4,16 @@
 \alias{admm.enet}
 \title{Elastic Net Regularization}
 \usage{
-admm.enet(A, b, lambda1 = 1, lambda2 = 1, rho = 1, abstol = 1e-04,
-  reltol = 0.01, maxiter = 1000)
+admm.enet(
+  A,
+  b,
+  lambda1 = 1,
+  lambda2 = 1,
+  rho = 1,
+  abstol = 1e-04,
+  reltol = 0.01,
+  maxiter = 1000
+)
 }
 \arguments{
 \item{A}{an \eqn{(m\times n)} regressor matrix}

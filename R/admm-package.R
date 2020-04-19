@@ -27,6 +27,7 @@
 #' @importFrom foreach "%dopar%" foreach registerDoSEQ
 #' @importFrom parallel detectCores stopCluster makeCluster
 #' @importFrom doParallel registerDoParallel
+#' @importFrom utils packageVersion
 #' @useDynLib ADMM
 NULL
 

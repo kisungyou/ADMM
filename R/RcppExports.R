@@ -49,8 +49,6 @@ admm_spca <- function(Sigma, reltol, abstol, maxiter, mu, rho) {
     .Call('_ADMM_admm_spca', PACKAGE = 'ADMM', Sigma, reltol, abstol, maxiter, mu, rho)
 }
 
-#' @keywords internal
-#' @noRd
 admm_tv <- function(b, xinit, lambda, reltol, abstol, maxiter, rho, alpha) {
     .Call('_ADMM_admm_tv', PACKAGE = 'ADMM', b, xinit, lambda, reltol, abstol, maxiter, rho, alpha)
 }

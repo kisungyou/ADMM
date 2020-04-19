@@ -30,8 +30,7 @@ double tv_objective(arma::colvec b, const double lambda, arma::mat D,
 * http://stanford.edu/~boyd/papers/pdf/admm_distr_stats.pdf
 * page 19 : section 3.3.1 : stopping criteria part (3.12).
 */
-//' @keywords internal
-//' @noRd
+
 // [[Rcpp::export]]
 Rcpp::List admm_tv(const arma::colvec& b, arma::colvec& xinit, const double lambda,
                    const double reltol, const double abstol, const int maxiter,

@@ -4,8 +4,16 @@
 \alias{admm.bp}
 \title{Basis Pursuit}
 \usage{
-admm.bp(A, b, xinit = NA, rho = 1, alpha = 1, abstol = 1e-04,
-  reltol = 0.01, maxiter = 1000)
+admm.bp(
+  A,
+  b,
+  xinit = NA,
+  rho = 1,
+  alpha = 1,
+  abstol = 1e-04,
+  reltol = 0.01,
+  maxiter = 1000
+)
 }
 \arguments{
 \item{A}{an \eqn{(m \times n)} regressor matrix}

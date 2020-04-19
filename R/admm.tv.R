@@ -45,11 +45,12 @@
 #' output  = admm.tv(xsignal)
 #'
 #' ## visualize
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,2))
-#' plot(1:300,xsignal,"l",main="original signal")
-#' plot(1:300,output$x,"l",main="denoised signal")
+#' plot(1:300,xsignal,  type="l",main="original signal")
+#' plot(1:300,output$x, type="l",main="denoised signal")
+#' par(opar)
 #'
-#' @rdname TV
 #' @export
 admm.tv <- function(b, lambda=1.0, xinit=NA,
                     rho=1.0, alpha=1.0, abstol=1e-4, reltol=1e-2, maxiter=1000){

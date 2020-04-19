@@ -4,8 +4,16 @@
 \alias{admm.tv}
 \title{Total Variation Minimization}
 \usage{
-admm.tv(b, lambda = 1, xinit = NA, rho = 1, alpha = 1,
-  abstol = 1e-04, reltol = 0.01, maxiter = 1000)
+admm.tv(
+  b,
+  lambda = 1,
+  xinit = NA,
+  rho = 1,
+  alpha = 1,
+  abstol = 1e-04,
+  reltol = 0.01,
+  maxiter = 1000
+)
 }
 \arguments{
 \item{b}{a length-\eqn{m} response vector}
@@ -64,8 +72,10 @@ xsignal = c(x1,x2,x3)
 output  = admm.tv(xsignal)
 
 ## visualize
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,2))
-plot(1:300,xsignal,"l",main="original signal")
-plot(1:300,output$x,"l",main="denoised signal")
+plot(1:300,xsignal,  type="l",main="original signal")
+plot(1:300,output$x, type="l",main="denoised signal")
+par(opar)
 
 }

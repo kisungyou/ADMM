@@ -4,8 +4,13 @@
 \alias{admm.rpca}
 \title{Robust Principal Component Analysis}
 \usage{
-admm.rpca(M, lambda = 1/sqrt(max(nrow(M), ncol(M))), mu = 1,
-  tol = 1e-07, maxiter = 1000)
+admm.rpca(
+  M,
+  lambda = 1/sqrt(max(nrow(M), ncol(M))),
+  mu = 1,
+  tol = 1e-07,
+  maxiter = 1000
+)
 }
 \arguments{
 \item{M}{an \eqn{(m\times n)} data matrix}
