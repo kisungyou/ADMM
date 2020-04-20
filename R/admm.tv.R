@@ -46,9 +46,8 @@
 #'
 #' ## visualize
 #' opar <- par(no.readonly=TRUE)
-#' par(mfrow=c(1,2))
-#' plot(1:300,xsignal,  type="l",main="original signal")
-#' plot(1:300,output$x, type="l",main="denoised signal")
+#' plot(1:300, xsignal, type="l", main="TV Regularization")
+#' lines(1:300, output$x, col="red", lwd=2)
 #' par(opar)
 #'
 #' @export

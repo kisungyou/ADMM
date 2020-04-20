@@ -67,7 +67,7 @@ become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 \examples{
 ## generate a random matrix and compute its sample covariance
 X    = matrix(rnorm(1000*5),nrow=1000)
-covX = cov(X)
+covX = stats::cov(X)
 
 ## compute 3 sparse basis
 output = admm.spca(covX, 3)

@@ -36,25 +36,27 @@
 #'
 #' @examples
 #' ## generate sample data
-#' n = 30;
-#' m = 10;
-#' A = matrix(rnorm(n*m), nrow=m);
+#' n = 30
+#' m = 10
 #'
-#' x = matrix(rep(0,n))
-#' x[c(3,6,21),] = rnorm(3)
-#' b = A%*%x
+#' A = matrix(rnorm(n*m), nrow=m)    # design matrix
+#' x = c(stats::rnorm(3),rep(0,n-3)) # coefficient
+#' x = base::sample(x)
+#' b = as.vector(A%*%x)              # response
 #'
 #' ## run example
-#' output = admm.bp(A, b)
+#' output  = admm.bp(A, b)
+#' niter   = length(output$history$s_norm)
+#' history = output$history
 #'
 #' ## report convergence plot
-#' niter  = length(output$history$s_norm)
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(1:niter, output$history$objval, "b", main="cost function")
-#' plot(1:niter, output$history$r_norm, "b", main="primal residual")
-#' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' plot(1:niter, history$objval, "b", main="cost function")
+#' plot(1:niter, history$r_norm, "b", main="primal residual")
+#' plot(1:niter, history$s_norm, "b", main="dual residual")
+#' par(opar)
 #'
-#' @rdname BP
 #' @export
 admm.bp <- function(A, b, xinit=NA,
                     rho=1.0, alpha=1.0,

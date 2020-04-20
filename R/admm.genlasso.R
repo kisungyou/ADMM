@@ -51,15 +51,17 @@
 #' regval = 0.1*Matrix::norm(t(A)%*%b, 'I')
 #'
 #' ## solve LASSO via reducing from Generalized LASSO
-#' output = admm.genlasso(A,b,D,lambda=regval) # set D as identity matrix
+#' output  = admm.genlasso(A,b,D,lambda=regval) # set D as identity matrix
+#' niter   = length(output$history$s_norm)
+#' history = output$history
 #'
-#' ## visualize
 #' ## report convergence plot
-#' niter  = length(output$history$s_norm)
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(1:niter, output$history$objval, "b", main="cost function")
-#' plot(1:niter, output$history$r_norm, "b", main="primal residual")
-#' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' plot(1:niter, history$objval, "b", main="cost function")
+#' plot(1:niter, history$r_norm, "b", main="primal residual")
+#' plot(1:niter, history$s_norm, "b", main="dual residual")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{tibshirani_solution_2011}{ADMM}
@@ -67,7 +69,6 @@
 #' \insertRef{zhu_augmented_2017}{ADMM}
 #'
 #' @author Xiaozhi Zhu
-#' @rdname GENLASSO
 #' @export
 admm.genlasso <- function(A, b, D=diag(length(b)), lambda=1.0, rho=1.0, alpha=1.0,
                        abstol=1e-4, reltol=1e-2, maxiter=1000){

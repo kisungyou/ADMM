@@ -38,14 +38,16 @@
 #' out3 = admm.rpca(X, lambda=1)
 #'
 #' ## visualize sparsity
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
 #' image(out1$S, main="lambda=0.01")
 #' image(out2$S, main="lambda=0.1")
 #' image(out3$S, main="lambda=1")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{candes_robust_2011}{ADMM}
-#' @rdname RPCA
+#'
 #' @export
 admm.rpca <- function(M, lambda=1/sqrt(max(nrow(M),ncol(M))), mu=1.0, tol=1e-7, maxiter=1000){
   # -----------------------------------------------------------------

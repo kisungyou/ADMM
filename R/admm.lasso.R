@@ -34,7 +34,7 @@
 #' become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' ## generate sample data
 #' m = 50
 #' n = 100
@@ -48,23 +48,25 @@
 #' b = A%*%x0 + sqrt(0.001)*matrix(rnorm(m))
 #'
 #' ## set regularization lambda value
-#' lambda = 0.1*Matrix::norm(t(A)%*%b, 'I')
+#' lambda = 0.1*base::norm(t(A)%*%b, "F")
 #'
 #' ## run example
-#' output = admm.lasso(A, b, lambda)
+#' output  = admm.lasso(A, b, lambda)
+#' niter   = length(output$history$s_norm)
+#' history = output$history
 #'
 #' ## report convergence plot
-#' niter  = length(output$history$s_norm)
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(1:niter, output$history$objval, "b", main="cost function")
-#' plot(1:niter, output$history$r_norm, "b", main="primal residual")
-#' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' plot(1:niter, history$objval, "b", main="cost function")
+#' plot(1:niter, history$r_norm, "b", main="primal residual")
+#' plot(1:niter, history$s_norm, "b", main="dual residual")
+#' par(opar)
 #' }
 #'
 #' @references
 #' \insertRef{tibshirani_regression_1996}{ADMM}
 #'
-#' @rdname LASSO
 #' @export
 admm.lasso <- function(A, b, lambda=1.0, rho=1.0, alpha=1.0,
                     abstol=1e-4, reltol=1e-2, maxiter=1000){

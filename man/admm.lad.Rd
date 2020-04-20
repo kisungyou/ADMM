@@ -59,7 +59,7 @@ become smaller than \code{eps_pri} and \code{eps_dual}, respectively.
 }
 
 \examples{
-\dontrun{
+\donttest{
 ## generate data
 m = 1000
 n = 100
@@ -72,15 +72,17 @@ idx = sample(1:m, round(m/10))
 b[idx] = b[idx] + 100*rnorm(length(idx))
 
 ## run the code
-output = admm.lad(A,b)
+output  = admm.lad(A,b)
+niter   = length(output$history$s_norm)
+history = output$history
 
 ## report convergence plot
-niter  = length(output$history$s_norm)
+opar <- par(no.readonly=TRUE)
 par(mfrow=c(1,3))
-plot(1:niter, output$history$objval, "b", main="cost function")
-plot(1:niter, output$history$r_norm, "b", main="primal residual")
-plot(1:niter, output$history$s_norm, "b", main="dual residual")
+plot(1:niter, history$objval, "b", main="cost function")
+plot(1:niter, history$r_norm, "b", main="primal residual")
+plot(1:niter, history$s_norm, "b", main="dual residual")
+par(opar)
 }
-
 
 }

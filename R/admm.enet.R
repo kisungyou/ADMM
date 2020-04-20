@@ -48,20 +48,22 @@
 #'
 #' ## run example with both regularization values = 1
 #' output = admm.enet(A, b, lambda1=1, lambda2=1)
+#' niter  = length(output$history$s_norm)
+#' history = output$history
 #'
 #' ## report convergence plot
-#' niter  = length(output$history$s_norm)
+#' opar <- par(no.readonly=TRUE)
 #' par(mfrow=c(1,3))
-#' plot(1:niter, output$history$objval, "b", main="cost function")
-#' plot(1:niter, output$history$r_norm, "b", main="primal residual")
-#' plot(1:niter, output$history$s_norm, "b", main="dual residual")
+#' plot(1:niter, history$objval, "b", main="cost function")
+#' plot(1:niter, history$r_norm, "b", main="primal residual")
+#' plot(1:niter, history$s_norm, "b", main="dual residual")
+#' par(opar)
 #'
 #' @references
 #' \insertRef{zou_regularization_2005}{ADMM}
 #'
 #' @seealso \code{\link{admm.lasso}}
 #' @author Xiaozhi Zhu
-#' @rdname ENET
 #' @export
 admm.enet <- function(A, b,
                       lambda1=1.0, lambda2=1.0, rho=1.0,

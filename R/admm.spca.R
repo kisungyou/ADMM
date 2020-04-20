@@ -42,7 +42,7 @@
 #' @examples
 #' ## generate a random matrix and compute its sample covariance
 #' X    = matrix(rnorm(1000*5),nrow=1000)
-#' covX = cov(X)
+#' covX = stats::cov(X)
 #'
 #' ## compute 3 sparse basis
 #' output = admm.spca(covX, 3)
@@ -50,7 +50,6 @@
 #' @references
 #' \insertRef{ma_alternating_2013}{ADMM}
 #'
-#' @rdname SPCA
 #' @export
 admm.spca <- function(Sigma, numpc, mu=1.0, rho=1.0, abstol=1e-4, reltol=1e-2, maxiter=1000){
   # -----------------------------------------------------------------
