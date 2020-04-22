@@ -46,7 +46,7 @@
 #' par(opar)
 #'
 #' @references
-#' \insertRef{candes_robust_2011}{ADMM}
+#' \insertRef{candes_robust_2011a}{ADMM}
 #'
 #' @export
 admm.rpca <- function(M, lambda=1/sqrt(max(nrow(M),ncol(M))), mu=1.0, tol=1e-7, maxiter=1000){

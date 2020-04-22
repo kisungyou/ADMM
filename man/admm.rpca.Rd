@@ -67,5 +67,5 @@ par(opar)
 
 }
 \references{
-\insertRef{candes_robust_2011}{ADMM}
+\insertRef{candes_robust_2011a}{ADMM}
 }

@@ -48,7 +48,7 @@
 #' output = admm.spca(covX, 3)
 #'
 #' @references
-#' \insertRef{ma_alternating_2013}{ADMM}
+#' \insertRef{ma_alternating_2013a}{ADMM}
 #'
 #' @export
 admm.spca <- function(Sigma, numpc, mu=1.0, rho=1.0, abstol=1e-4, reltol=1e-2, maxiter=1000){

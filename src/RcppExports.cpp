@@ -161,6 +161,25 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// admm_sdp
+Rcpp::List admm_sdp(arma::mat& C, arma::field<arma::mat>& listA, arma::vec b, double mymu, double myrho, double mygamma, int maxiter, double abstol, bool printer);
+RcppExport SEXP _ADMM_admm_sdp(SEXP CSEXP, SEXP listASEXP, SEXP bSEXP, SEXP mymuSEXP, SEXP myrhoSEXP, SEXP mygammaSEXP, SEXP maxiterSEXP, SEXP abstolSEXP, SEXP printerSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat& >::type C(CSEXP);
+    Rcpp::traits::input_parameter< arma::field<arma::mat>& >::type listA(listASEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type b(bSEXP);
+    Rcpp::traits::input_parameter< double >::type mymu(mymuSEXP);
+    Rcpp::traits::input_parameter< double >::type myrho(myrhoSEXP);
+    Rcpp::traits::input_parameter< double >::type mygamma(mygammaSEXP);
+    Rcpp::traits::input_parameter< int >::type maxiter(maxiterSEXP);
+    Rcpp::traits::input_parameter< double >::type abstol(abstolSEXP);
+    Rcpp::traits::input_parameter< bool >::type printer(printerSEXP);
+    rcpp_result_gen = Rcpp::wrap(admm_sdp(C, listA, b, mymu, myrho, mygamma, maxiter, abstol, printer));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_ADMM_multipleinversion", (DL_FUNC) &_ADMM_multipleinversion, 5},
@@ -172,6 +191,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_ADMM_admm_lasso", (DL_FUNC) &_ADMM_admm_lasso, 9},
     {"_ADMM_admm_rpca", (DL_FUNC) &_ADMM_admm_rpca, 5},
     {"_ADMM_admm_spca", (DL_FUNC) &_ADMM_admm_spca, 6},
+    {"_ADMM_admm_sdp", (DL_FUNC) &_ADMM_admm_sdp, 9},
     {NULL, NULL, 0}
 };
 

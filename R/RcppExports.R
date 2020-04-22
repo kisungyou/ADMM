@@ -39,3 +39,7 @@ admm_spca <- function(Sigma, reltol, abstol, maxiter, mu, rho) {
     .Call('_ADMM_admm_spca', PACKAGE = 'ADMM', Sigma, reltol, abstol, maxiter, mu, rho)
 }
 
+admm_sdp <- function(C, listA, b, mymu, myrho, mygamma, maxiter, abstol, printer) {
+    .Call('_ADMM_admm_sdp', PACKAGE = 'ADMM', C, listA, b, mymu, myrho, mygamma, maxiter, abstol, printer)
+}
+

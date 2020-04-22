@@ -60,7 +60,7 @@
 #' par(opar)
 #'
 #' @references
-#' \insertRef{zou_regularization_2005}{ADMM}
+#' \insertRef{zou_regularization_2005a}{ADMM}
 #'
 #' @seealso \code{\link{admm.lasso}}
 #' @author Xiaozhi Zhu

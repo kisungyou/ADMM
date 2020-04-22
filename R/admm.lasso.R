@@ -65,7 +65,7 @@
 #' }
 #'
 #' @references
-#' \insertRef{tibshirani_regression_1996}{ADMM}
+#' \insertRef{tibshirani_regression_1996a}{ADMM}
 #'
 #' @export
 admm.lasso <- function(A, b, lambda=1.0, rho=1.0, alpha=1.0,

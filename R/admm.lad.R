@@ -4,7 +4,6 @@
 #' \deqn{\textrm{min}_x ~ \|Ax-b\|_1}
 #' to use \eqn{\ell_1} norm instead of square loss for robust estimation of coefficient.
 #'
-#'
 #' @param A an \eqn{(m\times n)} regressor matrix
 #' @param b a length-\eqn{m} response vector
 #' @param xinit a length-\eqn{n} vector for initial value

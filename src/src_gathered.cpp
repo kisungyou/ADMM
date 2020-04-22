@@ -885,4 +885,115 @@ Rcpp::List admm_spca(const arma::mat& Sigma, const double reltol, const double a
   return(output);
 }
 
+// admm_sdp ===========================================================
+arma::mat sdp_evdplus(arma::mat& X){
+  int n = X.n_rows;
+  arma::vec eigval;
+  arma::mat eigvec;
+  arma::eig_sym(eigval, eigvec, X);
+  for (int i=0;i<n;i++){    if (eigval(i) < 0){      eigval(i) = 0.0;    }  }
+  arma::mat output = eigvec*arma::diagmat(eigval)*arma::trans(eigvec);
+  return(output);
+}
+double sdp_gap(arma::vec& b, arma::vec& y, arma::mat& C, arma::mat& X){
+  double term1 = (std::abs(arma::dot(b,y) - arma::dot(C,X)));
+  double term2 = 1.0 + std::abs(arma::dot(b,y)) + arma::dot(C,X);
+  return(term1/term2);
+}
 
+// [[Rcpp::export]]
+Rcpp::List admm_sdp(arma::mat& C, arma::field<arma::mat>& listA, arma::vec b, double mymu, double myrho, double mygamma, int maxiter, double abstol, bool printer){
+  // parameters
+  unsigned int n = C.n_rows;
+  unsigned int m = b.n_elem;
+
+  double mu    = mymu;
+  double rho   = myrho;
+  double gamma = mygamma;
+
+  // initialize
+  arma::mat Xold(n,n,fill::eye);
+  arma::mat Xnew(n,n,fill::zeros);
+  arma::mat Xtmp(n,n,fill::zeros);
+  arma::mat Sold(n,n,fill::zeros);
+  arma::mat Snew(n,n,fill::zeros);
+  arma::mat Vold(n,n,fill::zeros);
+  arma::mat Vnew(n,n,fill::zeros);
+  arma::vec yold(m,fill::zeros);
+  arma::vec ynew(m,fill::zeros);
+  arma::vec ytmp(m,fill::zeros);
+
+  // preliminary computation
+  // A, (AA^T)^{-1}
+  arma::mat A(m,n*n,fill::zeros);
+  for (int i=0;i<m;i++){
+    A.row(i) = arma::vectorise(listA(i)).t();
+  }
+  arma::mat AAinv = arma::pinv(A*A.t());
+
+  // main iteration
+  arma::vec h_objval(maxiter,fill::zeros);
+  arma::vec h_primal(maxiter,fill::zeros);
+  arma::vec h_dual(maxiter,fill::zeros);
+  arma::vec h_gap(maxiter,fill::zeros);
+  arma::vec hvec(3,fill::zeros);
+
+
+  int it;
+  for (it=0;it<maxiter;it++){
+    // 1. Update
+    // 1-1. update y
+    ynew = -AAinv*(mu*(A*arma::vectorise(Xold)-b) + A*arma::vectorise(Sold-C));
+    // 1-2. update S
+    Vnew = C - mu*Xold;
+    for (int i=0;i<m;i++){
+      Vnew = Vnew - ynew(i)*listA(i);
+    }
+    Snew = sdp_evdplus(Vnew);
+    // 1-3. update X
+    Xtmp = (1.0/mu)*(Snew-Vnew);
+    Xnew = (1.0-rho)*Xold + rho*Xtmp;
+
+    // 2. Termination Rules
+    Xtmp = C-Snew;
+    for (int i=0;i<m;i++){
+      Xtmp -= ynew(i)*listA(i);
+    }
+    h_objval(it) = arma::dot(C,Xnew);
+    h_primal(it) = arma::norm(A*arma::vectorise(Xnew)-b,2);
+    h_dual(it)   = arma::norm(Xtmp,"fro");
+    h_gap(it)    = sdp_gap(b,ynew,C,Xnew);
+
+    hvec(0) = h_primal(it);
+    hvec(1) = h_dual(it);
+    hvec(2) = h_gap(it);
+
+    // 3. Penalty update (very simple way)
+    if (hvec(0) < hvec(1)){
+      mu *= gamma;
+    } else {
+      mu /= gamma;
+    }
+
+    // 4. do the stopping
+    Xold = Xnew;
+    Sold = Snew;
+    Vold = Vnew;
+    yold = ynew;
+    if (printer==true){
+      Rcpp::Rcout << "* admm.sdp : iteration " << it << "/" << maxiter << " complete.." << std::endl;
+    }
+    if (hvec.max() < abstol){
+      break;
+    }
+  }
+
+  // 5. report results
+  List output;
+  output["X"] = Xold;
+  output["objval"] = h_objval.head(it);
+  output["eps_pri"]  = h_primal.head(it);
+  output["eps_dual"] = h_dual.head(it);
+  output["gap"]    = h_gap.head(it);
+  return(output);
+}

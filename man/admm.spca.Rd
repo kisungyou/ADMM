@@ -74,5 +74,5 @@ output = admm.spca(covX, 3)
 
 }
 \references{
-\insertRef{ma_alternating_2013}{ADMM}
+\insertRef{ma_alternating_2013a}{ADMM}
 }
