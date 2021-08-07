@@ -43,7 +43,7 @@ LASSO, or L1-regularized regression, is an optimization problem to solve
 \deqn{\textrm{min}_x ~ \frac{1}{2}\|Ax-b\|_2^2 + \lambda \|x\|_1}
 for sparsifying the coefficient vector \eqn{x}.
 The implementation is borrowed from Stephen Boyd's
-\href{http://stanford.edu/~boyd/papers/admm/lasso/lasso.html}{MATLAB code}.
+\href{https://stanford.edu/~boyd/papers/admm/lasso/lasso.html}{MATLAB code}.
 }
 \section{Iteration History}{
 

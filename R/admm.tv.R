@@ -5,7 +5,7 @@
 #' \deqn{\textrm{min}_x ~ \frac{1}{2}\|x-b\|_2^2 + \lambda \sum_i |x_{i+1}-x_i|}
 #' for a given signal \eqn{b}.
 #' The implementation is borrowed from Stephen Boyd's
-#' \href{http://stanford.edu/~boyd/papers/admm/total_variation/total_variation.html}{MATLAB code}.
+#' \href{https://stanford.edu/~boyd/papers/admm/total_variation/total_variation.html}{MATLAB code}.
 #'
 #' @param b a length-\eqn{m} response vector
 #' @param lambda regularization parameter
