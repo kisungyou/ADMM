@@ -10,5 +10,7 @@ License: GPL (>=3)
 Encoding: UTF-8
 Imports: Rcpp, Matrix, Rdpack, stats, doParallel, foreach, parallel, utils
 LinkingTo: Rcpp, RcppArmadillo
+URL: https://github.com/kisungyou/ADMM
+BugReports: https://github.com/kisungyou/ADMM/issues
 RoxygenNote: 7.1.1
 RdMacros: Rdpack
