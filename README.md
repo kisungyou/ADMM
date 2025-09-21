@@ -7,8 +7,6 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/ADMM)](https://CRAN.R-project.org/package=ADMM)
-[![Travis build
-status](https://travis-ci.com/kyoustat/ADMM.svg?branch=master)](https://travis-ci.com/kyoustat/ADMM)
 <!-- badges: end -->
 
 We provide implementation for a class of problems that use alternating
